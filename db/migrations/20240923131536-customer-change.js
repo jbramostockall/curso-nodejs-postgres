@@ -1,11 +1,16 @@
 'use strict';
-
-const { CustomerSchema, CUSTOMER_TABLE} = require('./../models/customer.model')
+const { DataTypes } = require('sequelize')
+const { CUSTOMER_TABLE} = require('./../models/customer.model')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface) {
-    await queryInterface.createTable(CUSTOMER_TABLE, CustomerSchema)
+    await queryInterface.changeColumn(CUSTOMER_TABLE, 'user_id', {
+      allowNull: false,
+      type: DataTypes.INTEGER,
+      field: 'user_id',
+      unique: true,
+    })
     /**
      * Add altering commands here.
      *
@@ -15,7 +20,6 @@ module.exports = {
   },
 
   async down (queryInterface) {
-    await queryInterface.dropTable(CUSTOMER_TABLE)
     /**
      * Add reverting commands here.
      *
